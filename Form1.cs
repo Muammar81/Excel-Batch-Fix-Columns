@@ -272,6 +272,11 @@ namespace OBCFix
         {
             txtIgnoredCols.Enabled = chkIgnoreCols.Enabled;
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://panettonegames.com/");
+        }
     }
 
 
