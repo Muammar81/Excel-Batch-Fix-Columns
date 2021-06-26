@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>OBC.ico</ApplicationIcon>
+    <ApplicationIcon>FixExcel.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -100,6 +100,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FixExcel.ico" />
     <Content Include="OBC.ico" />
     <None Include="Resources\iconfinder_103177_see_watch_view_eye_icon_512px.png" />
     <None Include="Resources\toppng.com-eye-icon-401x225.png" />

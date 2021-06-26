@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("OBCFix")]
-[assembly: AssemblyDescription("Fixes the numbers in OBC and OBC FTC Sheets in the FTC Monitoring Report")]
+[assembly: AssemblyTitle("Excel Batch Fix Columns")]
+[assembly: AssemblyDescription("Batch Fixes Common Column Issues in Excel")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Muammar Yacoob")]
-[assembly: AssemblyProduct("OBCFix")]
+[assembly: AssemblyCompany("Panettone Games")]
+[assembly: AssemblyProduct("Excel Batch Fix Columns")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

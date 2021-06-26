@@ -49,7 +49,7 @@ namespace OBCFix
 
                 fixButton.Text = $"Fix {files.Length} files";
 
-
+                fixButton.Enabled = true;
             }
         }
 
