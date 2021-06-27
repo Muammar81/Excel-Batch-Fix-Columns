@@ -91,7 +91,7 @@ namespace OBCFix
                 try
                 {
                     string tmp = (((xlWorkSheet.Cells[rowOffset, i] as Excel.Range).Value2).ToString());
-                    tmp = tmp.RemoveSpecialCharacters();
+                    //tmp = tmp.RemoveSpecialCharacters();
                     //Debug.Print(tmp);
                     lstCols.Items.Add(tmp);
                 }
@@ -260,7 +260,14 @@ namespace OBCFix
 
         private void sheetsList_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             PopulateColumns(sheetsList.SelectedItem.ToString(), (int)numHeaderOffset.Value);
+            lblColumns.Text = $"{sheetsList.SelectedItems[0]} Columns";
+
+            fixButton.Enabled = sheetsList.SelectedItems.Count > 0;
+
+            fixButton.Text = sheetsList.SelectedItems.Count > 1 ? $"Fix Multiple Sheets in {files.Length} files"
+                : $"Fix {sheetsList.SelectedItems[0]} in {files.Length} files";
         }
 
         private void chkFixDates_CheckedChanged(object sender, EventArgs e)
@@ -270,12 +277,64 @@ namespace OBCFix
 
         private void chkIgnoreCols_CheckedChanged(object sender, EventArgs e)
         {
-            txtIgnoredCols.Enabled = chkIgnoreCols.Enabled;
+            txtIgnoredCols.Enabled = chkIgnoreCols.Checked;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://panettonegames.com/");
+        }
+
+        private void lstCols_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedCol = ((ListBox)sender).SelectedItem.ToString();
+            toolTip1.SetToolTip((ListBox)sender,
+                "Double Click to Ignore or mark as a Date"
+                );
+        }
+
+        private void lstCols_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            toolTip1.SetToolTip((ListBox)sender, null);
+            string colName = lstCols.SelectedItem.ToString();
+            if (colName.ToUpper().Contains("DATE"))
+            {
+                string[] dateCols = txtDateHeader.Text.Split(',');
+                int pos = Array.IndexOf(dateCols, colName);
+                if (pos == -1)
+                {
+                    chkFixDates.Checked = true;
+                    txtDateHeader.Enabled = true;
+                    if (txtDateHeader.Text.Length > 0)
+                        txtDateHeader.Text += $",{colName}";
+                    else
+                        txtDateHeader.Text += $"{colName}";
+                }
+            }
+            else //ignore
+            {
+                string[] ignoredCols = txtIgnoredCols.Text.Split(',');
+                int pos = Array.IndexOf(ignoredCols, colName);
+                if (pos == -1)
+                {
+                    chkIgnoreCols.Checked = true;
+                    txtIgnoredCols.Enabled = true;
+                    if (txtIgnoredCols.Text.Length > 0)
+                        txtIgnoredCols.Text += $",{colName}";
+                    else
+                        txtIgnoredCols.Text += $"{colName}";
+
+                }
+            }
+
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            xlWorkBook.Close();
+            xlApp.Quit();//recent
+
         }
     }
 
