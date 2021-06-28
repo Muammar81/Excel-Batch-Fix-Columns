@@ -120,6 +120,7 @@ namespace OBCFix
             this.sheetsList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.sheetsList.Size = new System.Drawing.Size(199, 95);
             this.sheetsList.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.sheetsList, "Shift or Ctrl + Click to Select Multiple Sheets");
             this.sheetsList.SelectedIndexChanged += new System.EventHandler(this.sheetsList_SelectedIndexChanged);
             // 
             // label1
@@ -359,7 +360,6 @@ namespace OBCFix
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Excel Batch Fix Columns";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

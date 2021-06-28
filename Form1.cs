@@ -196,7 +196,10 @@ namespace OBCFix
                                 {
                                     int pos = Array.IndexOf(dateCols, colName);
                                     if (pos > -1)
+                                    {
+                                        xlWorkSheet.Columns[i].NumberFormat = "0"; //to number first to remove white spaces
                                         xlWorkSheet.Columns[i].NumberFormat = "dd mmmm yyyy";
+                                    }
                                     else
                                         xlWorkSheet.Columns[i].NumberFormat = "0";
                                 }
