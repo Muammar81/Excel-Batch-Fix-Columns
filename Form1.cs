@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -75,7 +76,7 @@ namespace OBCFix
 
         private void PopulateColumns(string sheetName, int rowOffset)
         {
-            lstCols.Items.Clear();
+            lvCols.Items.Clear();
 
             if (xlApp == null)
                 xlApp = new Excel.Application();
@@ -93,11 +94,34 @@ namespace OBCFix
                     string tmp = (((xlWorkSheet.Cells[rowOffset, i] as Excel.Range).Value2).ToString());
                     //tmp = tmp.RemoveSpecialCharacters();
                     //Debug.Print(tmp);
-                    lstCols.Items.Add(tmp);
+
+                    //stylize -------------
+                    string[] dateCols = txtDateHeader.Text.Split(',');
+                    string[] ignoredCols = txtIgnoredCols.Text.Split(',');
+                    ListViewItem li = new ListViewItem();
+                    if (chkIgnoreCols.Checked)
+                    {
+                        int pos = Array.IndexOf(ignoredCols, tmp);
+                        if (pos > -1)
+                            li.ForeColor = Color.Green;
+                    }
+
+                    if (chkFixDates.Checked)
+                    {
+                        int pos = Array.IndexOf(dateCols, tmp);
+                        if (pos > -1)
+                            li.ForeColor = Color.Orange;
+                    }
+
+
+                    li.Text = tmp;
+                    lvCols.Items.Add(li);
+                    //---------------------
+
                 }
                 catch (Exception e)
                 {
-                    lstCols.Items.Add("Null");
+                    lvCols.Items.Add("Null");
                 }
             }
 
@@ -291,27 +315,83 @@ namespace OBCFix
             toolTip1.SetToolTip((ListBox)sender,
                 "Double Click to Ignore or mark as a Date"
                 );
+
+
         }
 
-        private void lstCols_MouseDoubleClick(object sender, MouseEventArgs e)
+
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            toolTip1.SetToolTip((ListBox)sender, null);
-            string colName = lstCols.SelectedItem.ToString();
-            if (colName.ToUpper().Contains("DATE"))
+            try
             {
-                string[] dateCols = txtDateHeader.Text.Split(',');
-                int pos = Array.IndexOf(dateCols, colName);
-                if (pos == -1)
-                {
-                    chkFixDates.Checked = true;
-                    txtDateHeader.Enabled = true;
-                    if (txtDateHeader.Text.Length > 0)
-                        txtDateHeader.Text += $",{colName}";
-                    else
-                        txtDateHeader.Text += $"{colName}";
-                }
+                if (xlWorkBook != null)
+                    xlWorkBook.Close();
+
+                if (xlApp != null)
+                    xlApp.Quit();//recent
             }
-            else //ignore
+            catch (Exception ex) { }
+
+        }
+
+        private void lvCols_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (((ListView)sender).Items.Count < 1 || ((ListView)sender).Items == null)
+                    return;
+                toolTip1.SetToolTip((ListView)sender, null);
+
+                string colName = lvCols.SelectedItems[0].Text;
+                if (colName.ToUpper().Contains("DATE"))
+                {
+                    string[] dateCols = txtDateHeader.Text.Split(',');
+                    int pos = Array.IndexOf(dateCols, colName);
+                    if (pos == -1)
+                    {
+                        chkFixDates.Checked = true;
+                        txtDateHeader.Enabled = true;
+                        if (txtDateHeader.Text.Length > 0)
+                            txtDateHeader.Text += $",{colName}";
+                        else
+                            txtDateHeader.Text += $"{colName}";
+
+                        lvCols.SelectedItems[0].ForeColor = Color.Orange;
+                    }
+                }
+                else //ignore
+                {
+                    string[] ignoredCols = txtIgnoredCols.Text.Split(',');
+                    int pos = Array.IndexOf(ignoredCols, colName);
+                    if (pos == -1)
+                    {
+                        chkIgnoreCols.Checked = true;
+                        txtIgnoredCols.Enabled = true;
+                        if (txtIgnoredCols.Text.Length > 0)
+                            txtIgnoredCols.Text += $",{colName}";
+                        else
+                            txtIgnoredCols.Text += $"{colName}";
+
+                        lvCols.SelectedItems[0].ForeColor = Color.Green;
+                    }
+                }
+
+            }
+            catch (Exception ex) { }
+        }
+
+        private void lvCols_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //string selectedCol = ((ListView)sender).SelectedItems[0].Text;
+            toolTip1.SetToolTip((ListView)sender,
+                "Double Click to Ignore or mark as a Date"
+                );
+        }
+
+        private void ignoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string colName = lvCols.SelectedItems[0].Text;
             {
                 string[] ignoredCols = txtIgnoredCols.Text.Split(',');
                 int pos = Array.IndexOf(ignoredCols, colName);
@@ -324,17 +404,29 @@ namespace OBCFix
                     else
                         txtIgnoredCols.Text += $"{colName}";
 
+                    lvCols.SelectedItems[0].ForeColor = Color.Green;
                 }
             }
-
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void dateToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string colName = lvCols.SelectedItems[0].Text;
+            {
+                string[] dateCols = txtDateHeader.Text.Split(',');
+                int pos = Array.IndexOf(dateCols, colName);
+                if (pos == -1)
+                {
+                    chkFixDates.Checked = true;
+                    txtDateHeader.Enabled = true;
+                    if (txtDateHeader.Text.Length > 0)
+                        txtDateHeader.Text += $",{colName}";
+                    else
+                        txtDateHeader.Text += $"{colName}";
 
-            xlWorkBook.Close();
-            xlApp.Quit();//recent
-
+                    lvCols.SelectedItems[0].ForeColor = Color.Orange;
+                }
+            }
         }
     }
 

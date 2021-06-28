@@ -47,14 +47,18 @@ namespace OBCFix
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkCleanHeaderNames = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.lstCols = new System.Windows.Forms.ListBox();
             this.lblColumns = new System.Windows.Forms.Label();
             this.numHeaderOffset = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lvCols = new System.Windows.Forms.ListView();
+            this.contextMenueIgnoreDate = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ignoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHeaderOffset)).BeginInit();
+            this.contextMenueIgnoreDate.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -243,19 +247,6 @@ namespace OBCFix
             this.linkLabel1.VisitedLinkColor = System.Drawing.Color.White;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // lstCols
-            // 
-            this.lstCols.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lstCols.FormattingEnabled = true;
-            this.lstCols.Location = new System.Drawing.Point(224, 178);
-            this.lstCols.Name = "lstCols";
-            this.lstCols.Size = new System.Drawing.Size(273, 95);
-            this.lstCols.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.lstCols, "Double Click to Ignore or mark as a Date");
-            this.lstCols.SelectedIndexChanged += new System.EventHandler(this.lstCols_SelectedIndexChanged);
-            this.lstCols.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstCols_MouseDoubleClick);
-            // 
             // lblColumns
             // 
             this.lblColumns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -299,16 +290,58 @@ namespace OBCFix
             this.label3.TabIndex = 14;
             this.label3.Text = "Header Offset:";
             // 
+            // lvCols
+            // 
+            this.lvCols.ContextMenuStrip = this.contextMenueIgnoreDate;
+            this.lvCols.FullRowSelect = true;
+            this.lvCols.GridLines = true;
+            this.lvCols.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvCols.HideSelection = false;
+            this.lvCols.Location = new System.Drawing.Point(224, 178);
+            this.lvCols.MultiSelect = false;
+            this.lvCols.Name = "lvCols";
+            this.lvCols.ShowGroups = false;
+            this.lvCols.Size = new System.Drawing.Size(273, 95);
+            this.lvCols.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvCols.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.lvCols, "Double Click to Ignore or mark as a Date");
+            this.lvCols.UseCompatibleStateImageBehavior = false;
+            this.lvCols.View = System.Windows.Forms.View.List;
+            this.lvCols.SelectedIndexChanged += new System.EventHandler(this.lvCols_SelectedIndexChanged);
+            this.lvCols.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvCols_MouseDoubleClick);
+            // 
+            // contextMenueIgnoreDate
+            // 
+            this.contextMenueIgnoreDate.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ignoreToolStripMenuItem,
+            this.dateToolStripMenuItem});
+            this.contextMenueIgnoreDate.Name = "contextMenueIgnoreDate";
+            this.contextMenueIgnoreDate.Size = new System.Drawing.Size(181, 70);
+            // 
+            // ignoreToolStripMenuItem
+            // 
+            this.ignoreToolStripMenuItem.Name = "ignoreToolStripMenuItem";
+            this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ignoreToolStripMenuItem.Text = "&Ignore";
+            this.ignoreToolStripMenuItem.Click += new System.EventHandler(this.ignoreToolStripMenuItem_Click);
+            // 
+            // dateToolStripMenuItem
+            // 
+            this.dateToolStripMenuItem.Name = "dateToolStripMenuItem";
+            this.dateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dateToolStripMenuItem.Text = "&Date";
+            this.dateToolStripMenuItem.Click += new System.EventHandler(this.dateToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(508, 348);
+            this.Controls.Add(this.lvCols);
             this.Controls.Add(this.numHeaderOffset);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblColumns);
-            this.Controls.Add(this.lstCols);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
@@ -333,6 +366,7 @@ namespace OBCFix
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numHeaderOffset)).EndInit();
+            this.contextMenueIgnoreDate.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,12 +389,15 @@ namespace OBCFix
         private System.Windows.Forms.TextBox txtIgnoredCols;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.ListBox lstCols;
         private System.Windows.Forms.Label lblColumns;
         private System.Windows.Forms.NumericUpDown numHeaderOffset;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkCleanHeaderNames;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ContextMenuStrip contextMenueIgnoreDate;
+        private System.Windows.Forms.ToolStripMenuItem ignoreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dateToolStripMenuItem;
+        private System.Windows.Forms.ListView lvCols;
     }
 }
 
