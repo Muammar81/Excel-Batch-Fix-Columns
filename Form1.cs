@@ -292,6 +292,8 @@ namespace OBCFix
 
             fixButton.Text = sheetsList.SelectedItems.Count > 1 ? $"Fix Multiple Sheets in {files.Length} files"
                 : $"Fix {sheetsList.SelectedItems[0]} in {files.Length} files";
+
+
         }
 
         private void chkFixDates_CheckedChanged(object sender, EventArgs e)
@@ -341,7 +343,8 @@ namespace OBCFix
             {
                 if (((ListView)sender).Items.Count < 1 || ((ListView)sender).Items == null)
                     return;
-                toolTip1.SetToolTip((ListView)sender, null);
+
+                //toolTip1.SetToolTip((ListView)sender, "Tip");
 
                 string colName = lvCols.SelectedItems[0].Text;
                 if (colName.ToUpper().Contains("DATE"))
@@ -384,9 +387,8 @@ namespace OBCFix
         private void lvCols_SelectedIndexChanged(object sender, EventArgs e)
         {
             //string selectedCol = ((ListView)sender).SelectedItems[0].Text;
-            toolTip1.SetToolTip((ListView)sender,
-                "Double Click to Ignore or mark as a Date"
-                );
+
+
         }
 
         private void ignoreToolStripMenuItem_Click(object sender, EventArgs e)

@@ -316,19 +316,19 @@ namespace OBCFix
             this.ignoreToolStripMenuItem,
             this.dateToolStripMenuItem});
             this.contextMenueIgnoreDate.Name = "contextMenueIgnoreDate";
-            this.contextMenueIgnoreDate.Size = new System.Drawing.Size(181, 70);
+            this.contextMenueIgnoreDate.Size = new System.Drawing.Size(109, 48);
             // 
             // ignoreToolStripMenuItem
             // 
             this.ignoreToolStripMenuItem.Name = "ignoreToolStripMenuItem";
-            this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ignoreToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.ignoreToolStripMenuItem.Text = "&Ignore";
             this.ignoreToolStripMenuItem.Click += new System.EventHandler(this.ignoreToolStripMenuItem_Click);
             // 
             // dateToolStripMenuItem
             // 
             this.dateToolStripMenuItem.Name = "dateToolStripMenuItem";
-            this.dateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dateToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.dateToolStripMenuItem.Text = "&Date";
             this.dateToolStripMenuItem.Click += new System.EventHandler(this.dateToolStripMenuItem_Click);
             // 
