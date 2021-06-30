@@ -168,11 +168,12 @@ namespace OBCFix
                         try
                         {
                             if (passwordCheckBox.Checked)
-                                xlWorkSheet.Unprotect(pwd); //pwd
+                                xlWorkSheet.Unprotect(pwdBox.Text); //pwd
                         }
                         catch (Exception e)
                         {
                             MessageBox.Show("Wrong password used for " + xlWorkSheet.Name, "Error");
+                            continue;
                         }
 
                         int colCount = xlWorkSheet.UsedRange.Columns.Count;
